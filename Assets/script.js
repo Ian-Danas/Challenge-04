@@ -73,7 +73,7 @@ questions = [q1,q2,q3,q4,q5,q6]
     var savedScores = []
     var secondsLeft = 60
     var score = 1
-    var savedScores= []
+
 
     //function
     //start quiz
@@ -166,9 +166,11 @@ questions = [q1,q2,q3,q4,q5,q6]
         scoreSubmit.addEventListener("click", function() {
             initials = document.querySelector('#initials').value
             var namedScore = initials + ": " + score
+            savedScores = JSON.parse(localStorage.getItem('highscores'))
+            console.log(savedScores)
             savedScores.push(namedScore)
             localStorage.setItem("highscores", JSON.stringify(savedScores));
-            console.log(JSON.parse(localStorage.getItem('savedScores')))
+            console.log(JSON.parse(localStorage.getItem('highscores')))
             storageScore = JSON.parse(localStorage.getItem('highscores'))
             questionH3.setAttribute('style','display:flex')
             questionH3.textContent = 'HighScores ' + storageScore
@@ -178,7 +180,8 @@ questions = [q1,q2,q3,q4,q5,q6]
     
     document.querySelector("#highscores").addEventListener("click",function(){
         storageScore = JSON.parse(localStorage.getItem('highscores'))
-        questionH3.textContent = 'HighScores ' + storageScore
+        console.log(typeof storageScore)
+        questionH3.textContent = 'HighScores ' + storageScore.join(' ')
     })
 
 
