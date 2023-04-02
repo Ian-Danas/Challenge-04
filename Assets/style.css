@@ -29,13 +29,12 @@ font-size: 200%;
 }
 #answers{
     display: flex;
-    background-color: yellow;
     width:100%;
 }
 #choice{
     height: 10vh;
-    background-color: cornflowerblue;
-    border: 3px solid black;
+    /* background-color: cornflowerblue; */
+    /* border: 3px solid black; */
     width:100%;
     font-size: 200%;
 }

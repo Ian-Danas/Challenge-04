@@ -69,8 +69,10 @@ questions = [q1,q2,q3,q4,q5,q6]
     var feedback = document.querySelector("#feedback")
     //
     var startGame = document.querySelector("#start")
-    var i = 0
-    var secondsLeft = 60;
+    var choiceBox = document.querySelector('#choice')
+    var currentQ = 0
+    var secondsLeft = 60
+    var score = 1
 
     //function
     //start quiz
@@ -79,14 +81,17 @@ questions = [q1,q2,q3,q4,q5,q6]
         //display first question
 
     startGame.addEventListener("click",function(){
-        console.log('pressed play game ')
         if(!isPlaying){
             isPlaying=true;
-            questionH3.textContent = questions[i].question
-            answerBox.children.item(0).textContent = questions[0].answer1
-            answerBox.children.item(1).textContent = questions[0].answer2
-            answerBox.children.item(2).textContent = questions[0].answer3
-            answerBox.children.item(3).textContent = questions[0].answer4
+            answerBox.children.item(0).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
+            answerBox.children.item(1).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
+            answerBox.children.item(2).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
+            answerBox.children.item(3).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
+            questionH3.textContent = questions[0].question
+            answerBox.children.item(0).textContent = 'A.' + questions[0].answer1
+            answerBox.children.item(1).textContent = 'B.' + questions[0].answer2
+            answerBox.children.item(2).textContent = 'C.' + questions[0].answer3
+            answerBox.children.item(3).textContent = 'D.' + questions[0].answer4
             Game()
              //start timer
             countdownTimer = setInterval(function(){
@@ -103,40 +108,54 @@ questions = [q1,q2,q3,q4,q5,q6]
         }
         })
         function Game(){
+            
             answerBox.addEventListener("click", function(event) {
 
-            var element = event.target;
+                 var element = event.target;
+                if(secondsLeft != 0 && currentQ < questions.length){
+                    if (element.matches("#choice")) {
+                        console.log(element)
+                        var answer = element.getAttribute("data-answer");
+                        console.log(answer)
+                        if(answer === questions[currentQ].correct){
+                            feedback.textContent = 'Correct'
+                            nextQ(currentQ)
+                            }
+                        }else{
+                            feedback.textContent = 'Incorrect'
+                            secondsLeft = secondsLeft - 5
+                            timerH3.textContent=secondsLeft
+                            nextQ(currentQ)
+                            }
             
-            if (element.matches("#choice")) {
-                var answer = element.getAttribute("data-answer");
-                for (let i = 1; i < questions.length; i++) {     
-                    console.log(i)      
-                    questionH3.textContent = questions[i].question
-                    answerBox.children.item(0).textContent = questions[i].answer1
-                    answerBox.children.item(1).textContent = questions[i].answer2
-                    answerBox.children.item(2).textContent = questions[i].answer3
-                    answerBox.children.item(3).textContent = questions[i].answer4
-                }
-                console.log(answer)
-            
+                            
+                }else{
+                    timerH3.textContent = "Times Up"
+                    isPlaying=false
+                    endgame()
+                    }
+                }) 
             }
-    
-            if(answer === questions[i].correct){
-                feedback.textContent = 'Correct'
-    
-            }else{
-                secondsLeft--
-                feedback.textContent = 'Incorrect'
 
-                
-            }
-        
-    // start countdown timer at 60s
-    secondsLeft=60;
-    //display counterdown on screen
-    timerH3.textContent=secondsLeft
-        })
-                };    
+    function nextQ(index){
+        feedback.textContent = ''
+        questionH3.textContent = questions[index].question
+        answerBox.children.item(0).textContent = 'A.' + questions[index].answer1
+        answerBox.children.item(1).textContent = 'B.' + questions[index].answer2
+        answerBox.children.item(2).textContent = 'C.' + questions[index].answer3
+        answerBox.children.item(3).textContent = 'D.' + questions[index].answer4
+        currentQ++
+    }
+
+    function endgame(){
+        console.log('end of game')
+        console.log(score)
+        score = secondsLeft
+        questionH3.textContent = 'Please enter Initials'
+        prompt('Enter initials')
+        currentQ = 0
+
+    }
             
         
 
