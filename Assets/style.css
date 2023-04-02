@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+header{
+    display: flex;
+    background-color: aquamarine;
+    height:5vh;
+    justify-content: space-between;
+}
+#timer{
+font-size: 200%;
+}
+#highscores{
+    font-size: 200%;
+}
+.quiz{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:95vh;
+    background-color: blueviolet;
+}
+#question{
+    background-color: salmon;
+    font-size:300%; 
+}
+#answers{
+    display: flex;
+    background-color: yellow;
+    width:100%;
+}
+#choice{
+    height: 10vh;
+    background-color: cornflowerblue;
+    border: 3px solid black;
+    width:100%;
+    font-size: 200%;
+}
+#feedback{
+    background-color: chartreuse;
+}
