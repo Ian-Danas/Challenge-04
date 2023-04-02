@@ -110,21 +110,18 @@ questions = [q1,q2,q3,q4,q5,q6]
                  var element = event.target;
                 if(secondsLeft != 0 && currentQ < questions.length){
                     if (element.matches("#choice")) {
-                        // console.log(element)
                         var answer = element.getAttribute("data-answer");
-                        console.log('choosen answer',answer)
-                        console.log('correct answer',questions[currentQ].correct)
-                        console.log('current question',currentQ)
                         if(answer === questions[currentQ].correct){
                             feedback.textContent = 'Correct'
                             nextQ(currentQ)
-                            }
+                        
                         }else{
                             feedback.textContent = 'Incorrect'
                             secondsLeft = secondsLeft - 5
                             timerH3.textContent=secondsLeft
                             nextQ(currentQ)
                             }
+                        }
             
                             
                 }else{
@@ -136,7 +133,9 @@ questions = [q1,q2,q3,q4,q5,q6]
             }
 
     function nextQ(index){
-        feedback.textContent = ''
+        console.log('correct answer',questions[currentQ].correct)
+        console.log('current question',currentQ)
+        // feedback.textContent = ''
         questionH3.textContent = questions[index].question
         answerBox.children.item(0).textContent = 'A.' + questions[index].answer1
         answerBox.children.item(1).textContent = 'B.' + questions[index].answer2
@@ -148,7 +147,17 @@ questions = [q1,q2,q3,q4,q5,q6]
     function endgame(){
         console.log('end of game')
         console.log(score)
+        isPlaying = false
         score = secondsLeft
+        answerBox.children.item(0).textContent = ''
+        answerBox.children.item(1).textContent = ''
+        answerBox.children.item(2).textContent = ''
+        answerBox.children.item(3).textContent = ''
+        feedback.textContent = ''
+        answerBox.children.item(0).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
+        answerBox.children.item(1).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
+        answerBox.children.item(2).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
+        answerBox.children.item(3).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
         questionH3.textContent = 'Please enter Initials'
         prompt('Enter initials')
         currentQ = 0
