@@ -87,11 +87,7 @@ questions = [q1,q2,q3,q4,q5,q6]
             answerBox.children.item(1).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
             answerBox.children.item(2).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
             answerBox.children.item(3).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
-            questionH3.textContent = questions[0].question
-            answerBox.children.item(0).textContent = 'A.' + questions[0].answer1
-            answerBox.children.item(1).textContent = 'B.' + questions[0].answer2
-            answerBox.children.item(2).textContent = 'C.' + questions[0].answer3
-            answerBox.children.item(3).textContent = 'D.' + questions[0].answer4
+            nextQ(currentQ)
             Game()
              //start timer
             countdownTimer = setInterval(function(){
@@ -114,9 +110,11 @@ questions = [q1,q2,q3,q4,q5,q6]
                  var element = event.target;
                 if(secondsLeft != 0 && currentQ < questions.length){
                     if (element.matches("#choice")) {
-                        console.log(element)
+                        // console.log(element)
                         var answer = element.getAttribute("data-answer");
-                        console.log(answer)
+                        console.log('choosen answer',answer)
+                        console.log('correct answer',questions[currentQ].correct)
+                        console.log('current question',currentQ)
                         if(answer === questions[currentQ].correct){
                             feedback.textContent = 'Correct'
                             nextQ(currentQ)
