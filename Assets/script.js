@@ -1,59 +1,58 @@
 //define all questions and answers
-// var q1 = {
-//     question:'Who invented peanut butter?',
-//     answer1:'George Washington',
-//     answer2:'George Washington Carver',
-//     answer3:'Thomas Edison',
-//     answer4:'Abraham Lincoln',
-//     correct: 'b'
-// }
-// var q2 = {
-//     question:'Who invented peanut butter?',
-//     answer1:'George Washington',
-//     answer2:'George Washington Carver',
-//     answer3:'Thomas Edison',
-//     answer4:'Abraham Lincoln',
-//     correct: 'b'
-// }
+var q1 = {
+    question:'Who invented peanut butter?',
+    answer1:'George Washington',
+    answer2:'George Washington Carver',
+    answer3:'Thomas Edison',
+    answer4:'Abraham Lincoln',
+    correct: 'b'
+}
+var q2 = {
+    question:'What is the rarest M&M color',
+    answer1:'Red',
+    answer2:'Green',
+    answer3:'Brown',
+    answer4:'Blue',
+    correct: 'c'
+}
 
-// var q2 = {
-//     question:'Who invented peanut butter?',
-//     answer1:'George Washington',
-//     answer2:'George Washington Carver',
-//     answer3:'Thomas Edison',
-//     answer4:'Abraham Lincoln',
-//     correct: 'b'
-// }
+var q3 = {
+    question:'Which country consumes the most chocolate per capita?',
+    answer1:'USA',
+    answer2:'Germany',
+    answer3:'Switzerland',
+    answer4:'Italy',
+    correct: 'c'
+}
 
-// var q3 = {
-//     question:'Who invented peanut butter?',
-//     answer1:'George Washington',
-//     answer2:'George Washington Carver',
-//     answer3:'Thomas Edison',
-//     answer4:'Abraham Lincoln',
-//     correct: 'b'
-// }
+var q4 = {
+    question:'What was the first soft drink in space?',
+    answer1:'Coca Cola',
+    answer2:'Sprite',
+    answer3:'Pepsi',
+    answer4:'Ginger Ale',
+    correct: 'a'
+}
 
-// var q1 = {
-//     question:'Who invented peanut butter?',
-//     answer1:'George Washington',
-//     answer2:'George Washington Carver',
-//     answer3:'Thomas Edison',
-//     answer4:'Abraham Lincoln',
-//     correct: 'b'
-// }
+var q5 = {
+    question:'Which is the only edible food that never goes bad?',
+    answer1:'Pickles',
+    answer2:'Butter',
+    answer3:'Olive Oil',
+    answer4:'Honey',
+    correct: 'd'
+}
 
-// var q1 = {
-//     question:'Who invented peanut butter?',
-//     answer1:'George Washington',
-//     answer2:'George Washington Carver',
-//     answer3:'Thomas Edison',
-//     answer4:'Abraham Lincoln',
-//     correct: 'b'
-// }
+var q6 = {
+    question:'Which country invented ice cream?',
+    answer1:'Italy',
+    answer2:'USA',
+    answer3:'Russia',
+    answer4:'China',
+    correct: 'd'
+}
+questions = [q1,q2,q3,q4,q5,q6]
 
-import {questions} from './questions'
-console.log(questions)
 //define variables for tracking 
     //track time
     //track questions
@@ -70,44 +69,80 @@ console.log(questions)
     var feedback = document.querySelector("#feedback")
     //
     var startGame = document.querySelector("#start")
+    var i = 0
 
-
-    answerBox.addEventListener("click", function(event) {
-        var element = event.target;
-      
-        if (element.matches("#choice")) {
-          var answer = element.getAttribute("data-answer");
-          console.log(answer)
-      
-        }
-
-        if(answer === q1.correct){
-            feedback.textContent = 'Correct'
-        }else{
-            feedback.textContent = 'Incorrect'
-            
-        }
-      });
-
+    //function
+    //start quiz
+        //hide start button
+        //show the quiz container
+        //display first question
 
     startGame.addEventListener("click",function(){
+        console.log('pressed play game ')
         if(!isPlaying){
-            //startGame();
+            isPlaying=true;
+            Game()
+             //start timer
+            countdownTimer = setInterval(function(){
+                secondsLeft--;
+                //display counterdown on screen
+                timerH3.textContent=secondsLeft
+                if(secondsLeft<=0){
+                    //if time runs out, lose
+                    clearInterval(countdownTimer)
+                    timerH3.textContent = "Times Up"
+                    isPlaying=false
+                }
+            },1000)
         }
-    })
-      
+        })
+        function Game(){
+            for (let i = 0; i < questions.length; i++) {     
+                console.log(i)      
+                questionH3.textContent = questions[i].question
+                answerBox.children.item(0).textContent = questions[i].answer1
+                answerBox.children.item(1).textContent = questions[i].answer2
+                answerBox.children.item(2).textContent = questions[i].answer3
+                answerBox.children.item(3).textContent = questions[i].answer4
+                answerBox.addEventListener("click", function(event) {
+                    var element = event.target;
+                    
+                    if (element.matches("#choice")) {
+                        var answer = element.getAttribute("data-answer");
+                        console.log(answer)
+                    
+                    }
+            
+                    if(answer === questions[i].correct){
+                        feedback.textContent = 'Correct'
+            
+                    }else{
+                        secondsLeft--
+                        feedback.textContent = 'Incorrect'
+
+                        
+                    }
+                    });    
+                // start countdown timer at 60s
+                secondsLeft=60;
+                //display counterdown on screen
+                timerH3.textContent=secondsLeft
+                
+            }
+
+                // start countdown timer at 60s
+                secondsLeft=60;
+                //display counterdown on screen
+                timerH3.textContent=secondsLeft
+                
+            }
+        
+
     //start button
     //name/iniitals
     //save button
     //high scores container
 
-//function
-    //start quiz
-        //hide start button
-        //show the quiz container
-        //start timer
-        //display counterdown on screen
-        //display first question
 
  
 //function

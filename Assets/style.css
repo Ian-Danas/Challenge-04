@@ -6,7 +6,7 @@
 header{
     display: flex;
     background-color: aquamarine;
-    height:5vh;
+    height:10vh;
     justify-content: space-between;
 }
 #timer{
