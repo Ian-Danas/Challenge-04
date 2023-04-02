@@ -15,7 +15,6 @@ var q2 = {
     answer4:'Blue',
     correct: 'c'
 }
-
 var q3 = {
     question:'Which country consumes the most chocolate per capita?',
     answer1:'USA',
@@ -24,7 +23,6 @@ var q3 = {
     answer4:'Italy',
     correct: 'c'
 }
-
 var q4 = {
     question:'What was the first soft drink in space?',
     answer1:'Coca Cola',
@@ -33,7 +31,6 @@ var q4 = {
     answer4:'Ginger Ale',
     correct: 'a'
 }
-
 var q5 = {
     question:'Which is the only edible food that never goes bad?',
     answer1:'Pickles',
@@ -42,7 +39,6 @@ var q5 = {
     answer4:'Honey',
     correct: 'd'
 }
-
 var q6 = {
     question:'Which country invented ice cream?',
     answer1:'Italy',
@@ -52,6 +48,7 @@ var q6 = {
     correct: 'd'
 }
 questions = [q1,q2,q3,q4,q5,q6]
+
 
 //define variables for tracking 
     //track time
@@ -70,9 +67,13 @@ questions = [q1,q2,q3,q4,q5,q6]
     //
     var startGame = document.querySelector("#start")
     var choiceBox = document.querySelector('#choice')
+    var highscores = document.querySelector('#scores')
+    var scoreSubmit = document.querySelector('#submit')
     var currentQ = 0
+    var savedScores = []
     var secondsLeft = 60
     var score = 1
+    var savedScores= []
 
     //function
     //start quiz
@@ -82,6 +83,7 @@ questions = [q1,q2,q3,q4,q5,q6]
 
     startGame.addEventListener("click",function(){
         if(!isPlaying){
+            currentQ = 0
             isPlaying=true;
             answerBox.children.item(0).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
             answerBox.children.item(1).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
@@ -98,6 +100,7 @@ questions = [q1,q2,q3,q4,q5,q6]
                     //if time runs out, lose
                     clearInterval(countdownTimer)
                     timerH3.textContent = "Times Up"
+                    endgame()
                     isPlaying=false
                 }
             },1000)
@@ -106,96 +109,78 @@ questions = [q1,q2,q3,q4,q5,q6]
         function Game(){
             
             answerBox.addEventListener("click", function(event) {
-
                  var element = event.target;
-                if(secondsLeft != 0 && currentQ < questions.length){
+                 console.log(isPlaying)
+                if(secondsLeft != 0 && isPlaying != false){
                     if (element.matches("#choice")) {
                         var answer = element.getAttribute("data-answer");
                         if(answer === questions[currentQ].correct){
                             feedback.textContent = 'Correct'
+                            currentQ++
                             nextQ(currentQ)
                         
                         }else{
                             feedback.textContent = 'Incorrect'
                             secondsLeft = secondsLeft - 5
                             timerH3.textContent=secondsLeft
+                            currentQ++
                             nextQ(currentQ)
                             }
                         }
-            
-                            
+                
                 }else{
-                    timerH3.textContent = "Times Up"
+                    timerH3.textContent = "End of Quiz"
                     isPlaying=false
+                    clearInterval(countdownTimer)
                     endgame()
                     }
                 }) 
             }
 
     function nextQ(index){
-        console.log('correct answer',questions[currentQ].correct)
-        console.log('current question',currentQ)
-        // feedback.textContent = ''
-        questionH3.textContent = questions[index].question
-        answerBox.children.item(0).textContent = 'A.' + questions[index].answer1
-        answerBox.children.item(1).textContent = 'B.' + questions[index].answer2
-        answerBox.children.item(2).textContent = 'C.' + questions[index].answer3
-        answerBox.children.item(3).textContent = 'D.' + questions[index].answer4
-        currentQ++
+        if(index < questions.length){
+            questionH3.textContent = questions[index].question
+            answerBox.children.item(0).textContent = 'A.' + questions[index].answer1
+            answerBox.children.item(1).textContent = 'B.' + questions[index].answer2
+            answerBox.children.item(2).textContent = 'C.' + questions[index].answer3
+            answerBox.children.item(3).textContent = 'D.' + questions[index].answer4
+        }else{
+            isPlaying = false
+            endgame()
+        }
     }
 
     function endgame(){
-        console.log('end of game')
-        console.log(score)
         isPlaying = false
         score = secondsLeft
+        questionH3.setAttribute('style','display:none')
         answerBox.children.item(0).textContent = ''
         answerBox.children.item(1).textContent = ''
         answerBox.children.item(2).textContent = ''
         answerBox.children.item(3).textContent = ''
         feedback.textContent = ''
-        answerBox.children.item(0).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
-        answerBox.children.item(1).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
-        answerBox.children.item(2).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
-        answerBox.children.item(3).setAttribute('style', 'background-color: blueviolet; border: 0px solid black;')
-        questionH3.textContent = 'Please enter Initials'
-        prompt('Enter initials')
-        currentQ = 0
-
-    }
-            
+        answerBox.children.item(0).setAttribute('style', 'display:none;')
+        answerBox.children.item(1).setAttribute('style', 'display:none;')
+        answerBox.children.item(2).setAttribute('style', 'display:none;')
+        answerBox.children.item(3).setAttribute('style', 'display:none;')
+        scoreSubmit.addEventListener("click", function() {
+            initials = document.querySelector('#initials').value
+            var namedScore = initials + ": " + score
+            savedScores.push(namedScore)
+            localStorage.setItem("highscores", JSON.stringify(savedScores));
+            console.log(JSON.parse(localStorage.getItem('savedScores')))
+            storageScore = JSON.parse(localStorage.getItem('highscores'))
+            questionH3.setAttribute('style','display:flex')
+            questionH3.textContent = 'HighScores ' + storageScore
+        })
         
-
-    //start button
-    //name/iniitals
-    //save button
-    //high scores container
-
-
- 
-//function
-    //rendering a question
-        //clearing/remove previous question 
-        //getting first question 
-        //add question to the question container
-        //make a button for each answer
-        //add answers to the answer container
-
-//function
-    //handle answer clicks
-
-    //if 
-    //answer is wrong
-    //subtract time from the countdown timer
-    //maker sure time is displayed correctly on page
-    //flash wrong answer message (setTimeout)
-
-
-    //update current question
-    //display question on page 
+    }
     
-    //if question is the last question
-        //trigger quiz completion
+    document.querySelector("#highscores").addEventListener("click",function(){
+        storageScore = JSON.parse(localStorage.getItem('highscores'))
+        questionH3.textContent = 'HighScores ' + storageScore
+    })
+
 
 //function
     //handle quiz completion
@@ -208,8 +193,6 @@ questions = [q1,q2,q3,q4,q5,q6]
     //tracking time 
         //subtract time 
         //update the page
-        
-
     //if time hits zero
     //trigger quiz completion
 
@@ -225,9 +208,3 @@ questions = [q1,q2,q3,q4,q5,q6]
     //listening for key press
         //check if the key pressed was 'Enter' for saving scores
         //OPTIONAL check if the key pressed was a b c d for answers
-
-//event listeners
-    //click start
-    //click answers
-    //saving scores
-    //keyups

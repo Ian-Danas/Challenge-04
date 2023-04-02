@@ -39,5 +39,13 @@ font-size: 200%;
     font-size: 200%;
 }
 #feedback{
-    background-color: chartreuse;
+    color:white;
+}
+#scores{
+    display: flex;
+    background-color: aqua;
+    color:white;
+    justify-content: center;
+    align-content: center;
+    z-index: 2;
 }
