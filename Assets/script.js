@@ -62,12 +62,15 @@ questions = [q1,q2,q3,q4,q5,q6]
     var questionH3 = document.querySelector("#question")
     //answers
     var answerBox = document.querySelector("#answers")
+    answerBox.setAttribute('style','display:none')
     //feedback on answer choice
     var feedback = document.querySelector("#feedback")
     //
     var startGame = document.querySelector("#start")
     var choiceBox = document.querySelector('#choice')
+    choiceBox.setAttribute('style','display:none')
     var highscores = document.querySelector('#scores')
+    highscores.setAttribute('style','display:none')
     var scoreSubmit = document.querySelector('#submit')
     var currentQ = 0
     var savedScores = []
@@ -75,21 +78,16 @@ questions = [q1,q2,q3,q4,q5,q6]
     var score = 1
 
 
-    //function
-    //start quiz
-        //hide start button
-        //show the quiz container
-        //display first question
-
     startGame.addEventListener("click",function(){
         if(!isPlaying){
-            currentQ = 0
             isPlaying=true;
-            answerBox.children.item(0).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
-            answerBox.children.item(1).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
-            answerBox.children.item(2).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
-            answerBox.children.item(3).setAttribute('style', 'background-color: cornflowerblue; border: 3px solid black;')
-            nextQ(currentQ)
+            highscores.setAttribute('style','display:none')
+            secondsLeft = 60
+            currentQ = 0
+            console.log('current question at start of game',currentQ)
+            choiceBox.setAttribute('style','display:flex')
+            answerBox.setAttribute('style','display:flex')
+           renderQ(currentQ)
             Game()
              //start timer
             countdownTimer = setInterval(function(){
@@ -110,34 +108,33 @@ questions = [q1,q2,q3,q4,q5,q6]
             
             answerBox.addEventListener("click", function(event) {
                  var element = event.target;
-                 console.log(isPlaying)
                 if(secondsLeft != 0 && isPlaying != false){
                     if (element.matches("#choice")) {
                         var answer = element.getAttribute("data-answer");
                         if(answer === questions[currentQ].correct){
                             feedback.textContent = 'Correct'
                             currentQ++
-                            nextQ(currentQ)
+                            console.log('current question at middle of game',currentQ)
+                            renderQ(currentQ)
                         
                         }else{
                             feedback.textContent = 'Incorrect'
                             secondsLeft = secondsLeft - 5
                             timerH3.textContent=secondsLeft
                             currentQ++
-                            nextQ(currentQ)
+                            console.log('current question at middle of game',currentQ)
+                            renderQ(currentQ)
                             }
                         }
-                
                 }else{
                     timerH3.textContent = "End of Quiz"
                     isPlaying=false
-                    clearInterval(countdownTimer)
                     endgame()
                     }
                 }) 
             }
 
-    function nextQ(index){
+    function renderQ(index){
         if(index < questions.length){
             questionH3.textContent = questions[index].question
             answerBox.children.item(0).textContent = 'A.' + questions[index].answer1
@@ -153,7 +150,11 @@ questions = [q1,q2,q3,q4,q5,q6]
     function endgame(){
         isPlaying = false
         score = secondsLeft
-        questionH3.setAttribute('style','display:none')
+        clearInterval(countdownTimer)
+        timerH3.textContent = "End of Quiz"
+        // questionH3.setAttribute('style','display:none')
+        highscores.setAttribute('style','display:flex')
+        questionH3.textContent = 'End of quiz! Enter initials below'
         answerBox.children.item(0).textContent = ''
         answerBox.children.item(1).textContent = ''
         answerBox.children.item(2).textContent = ''
@@ -163,6 +164,7 @@ questions = [q1,q2,q3,q4,q5,q6]
         answerBox.children.item(1).setAttribute('style', 'display:none;')
         answerBox.children.item(2).setAttribute('style', 'display:none;')
         answerBox.children.item(3).setAttribute('style', 'display:none;')
+        
         scoreSubmit.addEventListener("click", function() {
             initials = document.querySelector('#initials').value
             var namedScore = initials + ": " + score
@@ -170,44 +172,18 @@ questions = [q1,q2,q3,q4,q5,q6]
             console.log(savedScores)
             savedScores.push(namedScore)
             localStorage.setItem("highscores", JSON.stringify(savedScores));
-            console.log(JSON.parse(localStorage.getItem('highscores')))
             storageScore = JSON.parse(localStorage.getItem('highscores'))
             questionH3.setAttribute('style','display:flex')
-            questionH3.textContent = 'HighScores ' + storageScore
+            questionH3.textContent = 'HighScores ' + storageScore.join(' ')
         })
         
     }
     
     document.querySelector("#highscores").addEventListener("click",function(){
-        storageScore = JSON.parse(localStorage.getItem('highscores'))
-        console.log(typeof storageScore)
-        questionH3.textContent = 'HighScores ' + storageScore.join(' ')
+        if(!isPlaying){
+
+            storageScore = JSON.parse(localStorage.getItem('highscores'))
+            console.log(typeof storageScore)
+            questionH3.textContent = 'HighScores ' + storageScore.join(' ')
+        }
     })
-
-
-//function
-    //handle quiz completion
-        //stop timer
-        //hide quiz container
-        //show end screen
-        //show time remaining as score
-
-//function
-    //tracking time 
-        //subtract time 
-        //update the page
-    //if time hits zero
-    //trigger quiz completion
-
-//function
-    //saving high scores
-    //get value of user input (name/initials)
-    //validiate input 
-    //retreive exisiting data from local storage
-    //save updated data back to local storage
-    //redirect to start screen 
-
-//function
-    //listening for key press
-        //check if the key pressed was 'Enter' for saving scores
-        //OPTIONAL check if the key pressed was a b c d for answers
