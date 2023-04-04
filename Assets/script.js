@@ -208,3 +208,6 @@ var questions = [q1,q2,q3,q4,q5,q6]
         highscores.setAttribute('style','display:none')
         timerH3.setAttribute('style','display:flex')
     }
+
+
+
