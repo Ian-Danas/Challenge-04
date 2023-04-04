@@ -87,6 +87,7 @@ font-size: 400%;
 }
 #showHighscores{
     display: flex;
+    flex-direction: column;
     height: 95vh;
     background-color: #D0A250;
     color:white;

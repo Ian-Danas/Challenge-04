@@ -84,6 +84,7 @@ var questions = [q1,q2,q3,q4,q5,q6]
     var secondsLeft;
     var score = 0
     var quizSection = document.querySelector('.quiz')
+    var initials = document.querySelector('#initials')
     // quizSection.setAttribute('style','display:none')
 
     startGame.addEventListener("click",function(){
@@ -93,7 +94,7 @@ var questions = [q1,q2,q3,q4,q5,q6]
             homeScreen.setAttribute('style','display:none')
             showHighScores.setAttribute('style','display:none')
             feedback.setAttribute('style','display:flex')
-            secondsLeft = 4
+            secondsLeft = 60
             currentQ = 0
             quizLayout()
             renderQ(currentQ)
@@ -171,14 +172,15 @@ var questions = [q1,q2,q3,q4,q5,q6]
     }
 
     scoreSubmit.addEventListener("click", function() {
-        initials = document.querySelector('#initials').value
-        var namedScore = initials + ": " + score
+        
+        var namedScore = initials.value + ": " + score
         savedScores = JSON.parse(localStorage.getItem("highscores"))||[]
         savedScores.push(namedScore)
         localStorage.setItem("highscores", JSON.stringify(savedScores))
         storageScore = JSON.parse(localStorage.getItem('highscores'))
         // scoreP.setAttribute('style','display:block')
         scoreP.textContent = 'HighScores ' + storageScore.join(' ')
+        initials.value = ''
     })
     
     
@@ -190,6 +192,7 @@ var questions = [q1,q2,q3,q4,q5,q6]
             storageScore = JSON.parse(localStorage.getItem('highscores'))||[]
             console.log(typeof storageScore)
             showHighScores.textContent = 'HighScores ' + storageScore.join(' ')
+        
         }
     })
     scoreClear.addEventListener("click",function(){
