@@ -1,27 +1,27 @@
 //define all questions and answers
 var q1 = {
-    question:'Who invented peanut butter?',
-    answer1:'George Washington',
-    answer2:'George Washington Carver',
-    answer3:'Thomas Edison',
-    answer4:'Abraham Lincoln',
-    correct: 'b'
+    question:'What was the first message sent by morse code?',
+    answer1:'Hello World',
+    answer2:'Hello',
+    answer3:'SOS',
+    answer4:'What hath God wrought',
+    correct: 'd'
 }
 var q2 = {
-    question:'What is the rarest M&M color',
-    answer1:'Red',
-    answer2:'Green',
-    answer3:'Brown',
-    answer4:'Blue',
+    question:'WWhich Italian town is the setting for Shakespeare’s Romeo and Juliet?',
+    answer1:'Rome',
+    answer2:'Milan',
+    answer3:'Verona',
+    answer4:'Florance',
     correct: 'c'
 }
 var q3 = {
-    question:'Which country consumes the most chocolate per capita?',
-    answer1:'USA',
-    answer2:'Germany',
-    answer3:'Switzerland',
-    answer4:'Italy',
-    correct: 'c'
+    question:'How many moons does Neptune have?',
+    answer1:'10',
+    answer2:'14',
+    answer3:'7',
+    answer4:'2',
+    correct: 'b'
 }
 var q4 = {
     question:'What was the first soft drink in space?',
@@ -32,11 +32,11 @@ var q4 = {
     correct: 'a'
 }
 var q5 = {
-    question:'Which is the only edible food that never goes bad?',
-    answer1:'Pickles',
-    answer2:'Butter',
-    answer3:'Olive Oil',
-    answer4:'Honey',
+    question:'How many Billboard #1 hits did Elvis have?',
+    answer1:'2',
+    answer2:'20',
+    answer3:'5',
+    answer4:'18',
     correct: 'd'
 }
 var q6 = {
@@ -47,7 +47,41 @@ var q6 = {
     answer4:'China',
     correct: 'd'
 }
-var questions = [q1,q2,q3,q4,q5,q6]
+var q7 = {
+    question:'What year was the first “Batman” comic book published?',
+    answer1:'1999',
+    answer2:'1972',
+    answer3:'1939',
+    answer4:'1921',
+    correct: 'c'
+}
+var q8 = {
+    question:'What color is a giraffe’s tongue?',
+    answer1:'purple',
+    answer2:'yellow',
+    answer3:'blue',
+    answer4:'green',
+    correct: 'a'
+}
+var q9 = {
+    question:'What is the maximum number of points someone can achieve on Pac-Man?',
+    answer1:'9999',
+    answer2:'33333360',
+    answer3:'2000000',
+    answer4:'9999998',
+    correct: 'b'
+}
+
+var q10 = {
+    question:'What is a single strand of spaghetti called?',
+    answer1:'spaghetto',
+    answer2:'spaghetta',
+    answer3:'spaghet',
+    answer4:'spaghetti',
+    correct: 'a'
+}
+
+var questions = [q1,q2,q3,q4,q5,q6,q7,q8,q9,q10]
 
 
 //define variables for tracking 
