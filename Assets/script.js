@@ -47,7 +47,7 @@ var q6 = {
     answer4:'China',
     correct: 'd'
 }
-questions = [q1,q2,q3,q4,q5,q6]
+var questions = [q1,q2,q3,q4,q5,q6]
 
 
 //define variables for tracking 
@@ -72,22 +72,19 @@ questions = [q1,q2,q3,q4,q5,q6]
     var highscores = document.querySelector('#scores')
     highscores.setAttribute('style','display:none')
     var scoreSubmit = document.querySelector('#submit')
-    var currentQ = 0
+    var currentQ;
     var savedScores = []
-    var secondsLeft = 60
-    var score = 1
+    var secondsLeft;
+    var score = 0
 
 
     startGame.addEventListener("click",function(){
         if(!isPlaying){
             isPlaying=true;
-            highscores.setAttribute('style','display:none')
             secondsLeft = 60
             currentQ = 0
-            console.log('current question at start of game',currentQ)
-            choiceBox.setAttribute('style','display:flex')
-            answerBox.setAttribute('style','display:flex')
-           renderQ(currentQ)
+            quizLayout()
+            renderQ(currentQ)
             Game()
              //start timer
             countdownTimer = setInterval(function(){
@@ -114,7 +111,6 @@ questions = [q1,q2,q3,q4,q5,q6]
                         if(answer === questions[currentQ].correct){
                             feedback.textContent = 'Correct'
                             currentQ++
-                            console.log('current question at middle of game',currentQ)
                             renderQ(currentQ)
                         
                         }else{
@@ -122,10 +118,9 @@ questions = [q1,q2,q3,q4,q5,q6]
                             secondsLeft = secondsLeft - 5
                             timerH3.textContent=secondsLeft
                             currentQ++
-                            console.log('current question at middle of game',currentQ)
                             renderQ(currentQ)
-                            }
                         }
+                    }
                 }else{
                     timerH3.textContent = "End of Quiz"
                     isPlaying=false
@@ -143,27 +138,22 @@ questions = [q1,q2,q3,q4,q5,q6]
             answerBox.children.item(3).textContent = 'D.' + questions[index].answer4
         }else{
             isPlaying = false
+            currentQ = 0
             endgame()
         }
     }
 
     function endgame(){
         isPlaying = false
+        renderQ(0)
         score = secondsLeft
         clearInterval(countdownTimer)
         timerH3.textContent = "End of Quiz"
-        // questionH3.setAttribute('style','display:none')
         highscores.setAttribute('style','display:flex')
         questionH3.textContent = 'End of quiz! Enter initials below'
-        answerBox.children.item(0).textContent = ''
-        answerBox.children.item(1).textContent = ''
-        answerBox.children.item(2).textContent = ''
-        answerBox.children.item(3).textContent = ''
         feedback.textContent = ''
-        answerBox.children.item(0).setAttribute('style', 'display:none;')
-        answerBox.children.item(1).setAttribute('style', 'display:none;')
-        answerBox.children.item(2).setAttribute('style', 'display:none;')
-        answerBox.children.item(3).setAttribute('style', 'display:none;')
+        choiceBox.setAttribute('style','display:none')
+        answerBox.setAttribute('style','display:none')
         
         scoreSubmit.addEventListener("click", function() {
             initials = document.querySelector('#initials').value
@@ -187,3 +177,9 @@ questions = [q1,q2,q3,q4,q5,q6]
             questionH3.textContent = 'HighScores ' + storageScore.join(' ')
         }
     })
+
+    function quizLayout(){
+        choiceBox.setAttribute('style','display:flex')
+        answerBox.setAttribute('style','display:flex')
+        highscores.setAttribute('style','display:none')
+    }
