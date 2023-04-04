@@ -87,6 +87,7 @@ var questions = [q1,q2,q3,q4,q5,q6]
     var initials = document.querySelector('#initials')
     // quizSection.setAttribute('style','display:none')
 
+    //event listner on the start button which will then set up the quiz layout,start the timer,resets all tracked variables and then calls the render question function to get the first question.
     startGame.addEventListener("click",function(){
         if(!isPlaying){
             isPlaying=true;
@@ -114,31 +115,34 @@ var questions = [q1,q2,q3,q4,q5,q6]
             },1000)
         }
         })
-            answerBox.addEventListener("click", function(event) {
-                 var element = event.target;
-                if(secondsLeft != 0 && isPlaying != false){
-                    if (element.matches("#choice")) {
-                        var answer = element.getAttribute("data-answer");
-                        if(answer === questions[currentQ].correct){
-                            feedback.textContent = 'Correct'
-                            currentQ++
-                            renderQ(currentQ)
-                        
-                        }else{
-                            feedback.textContent = 'Incorrect'
-                            secondsLeft = secondsLeft - 5
-                            timerH3.textContent= 'time left: ' + secondsLeft
-                            currentQ++
-                            renderQ(currentQ)
-                        }
-                    }
+    
+    //listener to which multiple choice the user selected and checks to see if that answer matches the given answer in the questions objects and then calls the renderquestion function to get the next question
+    answerBox.addEventListener("click", function(event) {
+            var element = event.target;
+        if(secondsLeft != 0 && isPlaying != false){
+            if (element.matches("#choice")) {
+                var answer = element.getAttribute("data-answer");
+                if(answer === questions[currentQ].correct){
+                    feedback.textContent = 'Correct'
+                    currentQ++
+                    renderQ(currentQ)
+                
                 }else{
-                    // timerH3.textContent = "End of Quiz"
-                    isPlaying=false
-                    endgame()
-                    }
-                }) 
+                    feedback.textContent = 'Incorrect'
+                    secondsLeft = secondsLeft - 5
+                    timerH3.textContent= 'time left: ' + secondsLeft
+                    currentQ++
+                    renderQ(currentQ)
+                }
+            }
+        }else{
+            // timerH3.textContent = "End of Quiz"
+            isPlaying=false
+            endgame()
+            }
+        }) 
 
+    //function that puts all the text for the questions and the multiple choice into thier box so that the next questions is displayed
     function renderQ(index){
         if(index < questions.length){
             questionH3.textContent = questions[index].question
@@ -155,6 +159,7 @@ var questions = [q1,q2,q3,q4,q5,q6]
         }
     }
 
+    //function that changes the layout and saves the score once the game is over by either timer ending or all questions answered
     function endgame(){
         isPlaying = false
         score = secondsLeft
@@ -195,13 +200,14 @@ var questions = [q1,q2,q3,q4,q5,q6]
         
         }
     })
+    //listener for clear button to be clicked and then clears local storage
     scoreClear.addEventListener("click",function(){
             localStorage.clear()
             storageScore = JSON.parse(localStorage.getItem('highscores'))||[]
             scoreP.textContent = 'HighScores ' + storageScore.join(' ')
     })
 
-
+    //sets up the layout for the quiz to be called once start is pressed
     function quizLayout(){
         choiceBox.setAttribute('style','display:flex')
         answerBox.setAttribute('style','display:flex')
