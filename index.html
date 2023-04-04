@@ -24,9 +24,9 @@
   </head>
   <body>
     <header>
+      <button id="start">Start</button>
       <button id="highscores">View highscore</button>
-      <button id="start">Start Game</button>
-      <h3 id="timer">Timer</h3>
+      <!-- <h3 id="timer">Timer</h3> -->
     </header>
     <main>
       <section class="quiz">
@@ -40,10 +40,22 @@
           <p id="choice" data-answer="d"></p>
         </section>
         <section id="feedback"></section>
+         <h3 id="timer">Timer</h3>
       </section>
-      <section id="scores">Testing scores
+      <section id="scores">
+        <h3 id = 'gameOver'></h3>
+        <h4>Enter initials below</h4>
         <input id = "initials" type="text">
         <button id = 'submit'>submit score</button>
+        <button id = 'clear'>clear scores</button>
+        <p id="viewScores"></p>
+      </section>
+      <section id = 'showHighscores'>
+        <p id="viewScores"></p>
+        <button id = 'clear'>clear scores</button>
+      </section>
+      <section id = 'homeScreen'>
+        <h2>Press Start to Start Game!</h2>
       </section>
     </main>
   </body>

@@ -5,7 +5,7 @@
 }
 header{
     display: flex;
-    background-color: aquamarine;
+    background-color:  #C55954;
     height:5vh;
     justify-content: space-between;
 }
@@ -16,36 +16,83 @@ font-size: 200%;
     font-size: 200%;
 }
 .quiz{
-    display:flex;
+    /* display:flex; */
+    display:none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height:95vh;
-    background-color: blueviolet;
+    background-color: #F3EADA;
 }
 #question{
-    background-color: salmon;
+    /* background-color: salmon; */
     font-size:300%; 
 }
 #answers{
     display: flex;
+    flex-direction: column;
     width:100%;
 }
 #choice{
     height: 10vh;
-    background-color: cornflowerblue;
+    width:5vw;
+    padding-bottom: 2px;
+    background-color: #36686E;
     border: 3px solid black;
     width:100%;
     font-size: 200%;
 }
 #feedback{
-    color:white;
+    color:black;
+    font-size: 200%;
 }
 #scores{
-    display: flex;
-    height: 5vh;
-    background-color: aqua;
+    /* display: flex;
+    flex-direction: column; */
+    height: 95vh;
+    background-color: #D0A250;
     color:white;
+    text-align: center;
+    /* align-items: center;
+    justify-content: center; */
+}
+#initials{
+    display: inline-flex;
+    text-align: center;
+    top:100px;
+}
+#scores h3{
+    font-size: 400%;
+}
+#scores h4{
+    font-size: 300%;
+}
+#start{
+justify-content: center;
+align-items: center;
+font-size: 200%;
+}
+#homeScreen{
+display: flex;
+height:95vh;
+background-color: #F3EADA;
+text-align: center;
+align-items: center;
+justify-content: center;
+font-size: 400%;
+}
+#homeScreen h2{
+    text-align: center;
+
+}
+#showHighscores{
+    display: flex;
+    height: 95vh;
+    background-color: #D0A250;
+    color:white;
+    text-align: center;
+    align-items: center;
     justify-content: center;
-    align-content: center;
+    font-size: 200%;
+
 }

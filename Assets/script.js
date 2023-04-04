@@ -58,6 +58,7 @@ var questions = [q1,q2,q3,q4,q5,q6]
 //create variables to reference DOM elements
     //timer
     var timerH3 = document.querySelector("#timer");
+    timerH3.setAttribute('style','display:none')
     //questions
     var questionH3 = document.querySelector("#question")
     //answers
@@ -72,16 +73,27 @@ var questions = [q1,q2,q3,q4,q5,q6]
     var highscores = document.querySelector('#scores')
     highscores.setAttribute('style','display:none')
     var scoreSubmit = document.querySelector('#submit')
+    var scoreClear = document.querySelector('#clear')
+    var homeScreen = document.querySelector('#homeScreen')
+    var scoreP = document.querySelector('#viewScores')
+    var showHighScores = document.querySelector('#showHighscores')
+    var gameOver = document.querySelector('#gameOver')
+    showHighScores.setAttribute('style','display:none')
     var currentQ;
     var savedScores = []
     var secondsLeft;
     var score = 0
-
+    var quizSection = document.querySelector('.quiz')
+    // quizSection.setAttribute('style','display:none')
 
     startGame.addEventListener("click",function(){
         if(!isPlaying){
             isPlaying=true;
-            secondsLeft = 60
+            quizSection.setAttribute('style','display:flex')
+            homeScreen.setAttribute('style','display:none')
+            showHighScores.setAttribute('style','display:none')
+            feedback.setAttribute('style','display:flex')
+            secondsLeft = 4
             currentQ = 0
             quizLayout()
             renderQ(currentQ)
@@ -90,11 +102,11 @@ var questions = [q1,q2,q3,q4,q5,q6]
             countdownTimer = setInterval(function(){
                 secondsLeft--;
                 //display counterdown on screen
-                timerH3.textContent=secondsLeft
+                timerH3.textContent='time left: ' + secondsLeft
                 if(secondsLeft<=0){
                     //if time runs out, lose
                     clearInterval(countdownTimer)
-                    timerH3.textContent = "Times Up"
+                    // timerH3.textContent = "Times Up"
                     endgame()
                     isPlaying=false
                 }
@@ -114,13 +126,13 @@ var questions = [q1,q2,q3,q4,q5,q6]
                         }else{
                             feedback.textContent = 'Incorrect'
                             secondsLeft = secondsLeft - 5
-                            timerH3.textContent=secondsLeft
+                            timerH3.textContent= 'time left: ' + secondsLeft
                             currentQ++
                             renderQ(currentQ)
                         }
                     }
                 }else{
-                    timerH3.textContent = "End of Quiz"
+                    // timerH3.textContent = "End of Quiz"
                     isPlaying=false
                     endgame()
                     }
@@ -145,41 +157,51 @@ var questions = [q1,q2,q3,q4,q5,q6]
     function endgame(){
         isPlaying = false
         score = secondsLeft
+        gameOver.textContent = 'Quiz Complete! your score was: ' + score
         clearInterval(countdownTimer)
-        timerH3.textContent = "End of Quiz"
-        highscores.setAttribute('style','display:flex')
-        questionH3.textContent = 'End of quiz! Enter initials below'
+        // timerH3.textContent = "End of Quiz"
+        quizSection.setAttribute('style','display:none')
+        highscores.setAttribute('style','display:block')
         feedback.textContent = ''
         choiceBox.setAttribute('style','display:none')
         answerBox.setAttribute('style','display:none')
+        timerH3.setAttribute('style','display:none')
+        
         
     }
 
     scoreSubmit.addEventListener("click", function() {
         initials = document.querySelector('#initials').value
         var namedScore = initials + ": " + score
-        console.log(savedScores)
-        savedScores = JSON.parse(localStorage.getItem("highscores"))
-        console.log(savedScores)
+        savedScores = JSON.parse(localStorage.getItem("highscores"))||[]
         savedScores.push(namedScore)
         localStorage.setItem("highscores", JSON.stringify(savedScores))
         storageScore = JSON.parse(localStorage.getItem('highscores'))
-        questionH3.setAttribute('style','display:flex')
-        questionH3.textContent = 'HighScores ' + storageScore.join(' ')
+        // scoreP.setAttribute('style','display:block')
+        scoreP.textContent = 'HighScores ' + storageScore.join(' ')
     })
     
     
     document.querySelector("#highscores").addEventListener("click",function(){
         if(!isPlaying){
-
-            storageScore = JSON.parse(localStorage.getItem('highscores'))
+            highscores.setAttribute('style','display:none')
+            homeScreen.setAttribute('style','display:none')
+            showHighScores.setAttribute('style','display:flex')
+            storageScore = JSON.parse(localStorage.getItem('highscores'))||[]
             console.log(typeof storageScore)
-            questionH3.textContent = 'HighScores ' + storageScore.join(' ')
+            showHighScores.textContent = 'HighScores ' + storageScore.join(' ')
         }
     })
+    scoreClear.addEventListener("click",function(){
+            localStorage.clear()
+            storageScore = JSON.parse(localStorage.getItem('highscores'))||[]
+            scoreP.textContent = 'HighScores ' + storageScore.join(' ')
+    })
+
 
     function quizLayout(){
         choiceBox.setAttribute('style','display:flex')
         answerBox.setAttribute('style','display:flex')
         highscores.setAttribute('style','display:none')
+        timerH3.setAttribute('style','display:flex')
     }
