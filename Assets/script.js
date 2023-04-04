@@ -85,7 +85,7 @@ var questions = [q1,q2,q3,q4,q5,q6]
             currentQ = 0
             quizLayout()
             renderQ(currentQ)
-            Game()
+            // Game()
              //start timer
             countdownTimer = setInterval(function(){
                 secondsLeft--;
@@ -101,8 +101,6 @@ var questions = [q1,q2,q3,q4,q5,q6]
             },1000)
         }
         })
-        function Game(){
-            
             answerBox.addEventListener("click", function(event) {
                  var element = event.target;
                 if(secondsLeft != 0 && isPlaying != false){
@@ -127,7 +125,6 @@ var questions = [q1,q2,q3,q4,q5,q6]
                     endgame()
                     }
                 }) 
-            }
 
     function renderQ(index){
         if(index < questions.length){
@@ -136,6 +133,8 @@ var questions = [q1,q2,q3,q4,q5,q6]
             answerBox.children.item(1).textContent = 'B.' + questions[index].answer2
             answerBox.children.item(2).textContent = 'C.' + questions[index].answer3
             answerBox.children.item(3).textContent = 'D.' + questions[index].answer4
+            
+            
         }else{
             isPlaying = false
             currentQ = 0
@@ -145,7 +144,6 @@ var questions = [q1,q2,q3,q4,q5,q6]
 
     function endgame(){
         isPlaying = false
-        renderQ(0)
         score = secondsLeft
         clearInterval(countdownTimer)
         timerH3.textContent = "End of Quiz"
@@ -155,19 +153,21 @@ var questions = [q1,q2,q3,q4,q5,q6]
         choiceBox.setAttribute('style','display:none')
         answerBox.setAttribute('style','display:none')
         
-        scoreSubmit.addEventListener("click", function() {
-            initials = document.querySelector('#initials').value
-            var namedScore = initials + ": " + score
-            savedScores = JSON.parse(localStorage.getItem('highscores'))
-            console.log(savedScores)
-            savedScores.push(namedScore)
-            localStorage.setItem("highscores", JSON.stringify(savedScores));
-            storageScore = JSON.parse(localStorage.getItem('highscores'))
-            questionH3.setAttribute('style','display:flex')
-            questionH3.textContent = 'HighScores ' + storageScore.join(' ')
-        })
-        
     }
+
+    scoreSubmit.addEventListener("click", function() {
+        initials = document.querySelector('#initials').value
+        var namedScore = initials + ": " + score
+        console.log(savedScores)
+        savedScores = JSON.parse(localStorage.getItem("highscores"))
+        console.log(savedScores)
+        savedScores.push(namedScore)
+        localStorage.setItem("highscores", JSON.stringify(savedScores))
+        storageScore = JSON.parse(localStorage.getItem('highscores'))
+        questionH3.setAttribute('style','display:flex')
+        questionH3.textContent = 'HighScores ' + storageScore.join(' ')
+    })
+    
     
     document.querySelector("#highscores").addEventListener("click",function(){
         if(!isPlaying){
