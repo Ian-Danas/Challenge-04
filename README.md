@@ -1,4 +1,4 @@
-# Challenge-04
+# Trivia Quiz
 ## Description
 
 This project provides a website to take a trivia quiz. The user will be able to press a start button to start the timed quiz and then click on the provided answers and will then be presented with another question. At the end of the quiz the user will be able to input thier score and save it to a highscore in local storage so they can come back later and look at thier scores.
